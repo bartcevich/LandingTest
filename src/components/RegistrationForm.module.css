@@ -1,0 +1,94 @@
+.sidebar {
+  position: absolute;
+  border-radius: 24px 24px 0 0;
+  bottom: 0;
+  right: 0;
+  height: 426px;
+  width: 100%;
+  background-color: #1a1a1a; /* Замените $color-dark на актуальный цвет */
+  display: flex;
+  align-items: center;
+  z-index: 200;
+}
+
+.sidebarImage {
+  position: absolute;
+  top: -16%;
+  right: 0;
+  max-height: 150px;
+}
+
+.sidebarLoader {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.form {
+  max-width: 380px;
+  width: 74.4%;
+  margin: auto;
+  margin-top: 36px;
+  margin-bottom: 48px;
+}
+
+.formTitle {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.27;
+  margin-bottom: 22px;
+  color: white;
+}
+
+.formItem {
+  margin-bottom: 8px;
+}
+
+.formCheckbox {
+  margin-top: 22px;
+}
+
+.formButton {
+  margin-top: 22px;
+}
+
+/* Медиа-запросы */
+@media (min-width: 768px) {
+  .sidebar {
+    top: 0;
+    width: 40%;
+    height: 100%;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+  }
+  
+  .sidebarImage {
+    display: none;
+  }
+  
+  .sidebarLoader {
+    align-items: center;
+  }
+  
+  .form {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sidebar {
+    width: 580px;
+  }
+  
+  .form {
+    max-width: 380px;
+  }
+}
