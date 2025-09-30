@@ -1,3 +1,6 @@
+yarn install
+yarn dev
+
 src/
 ├── app/
 │ ├── layout.tsx

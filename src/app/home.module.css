@@ -1,0 +1,45 @@
+.homepage {
+  background-image: url('@/assets/images/mobile-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.homepage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+@media (min-width: 640px) {
+  .homepage {
+    background-position: 50% 40%;
+  }
+}
+
+@media (min-width: 768px) {
+  .homepage {
+    background-position: 10% bottom;
+    background-size: cover;
+    background-image: url('@/assets/images/background-main.webp');
+  }
+}
+
+@media (min-width: 1536px) {
+  .homepage {
+    background-position: center;
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
