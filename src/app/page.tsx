@@ -7,18 +7,14 @@ export default function Home() {
   return (
     <main className={styles.homepage}>
       <div
-        className={`w-full max-w-[1920px] mx-auto min-h-[1080px] overflow-hidden ${styles.content}`}
+        // className={`w-full max-w-[1920px] mx-auto min-h-[1080px] overflow-hidden ${styles.content}`}
+        className={styles.content}
       >
         <Header />
         <Promotion />
-        <RegistrationForm />
 
-        {/* Дополнительная информация */}
-        <div className="container mx-auto px-4 py-8 text-center text-white">
-          <p>Камера телефона +375 29 12...</p>
-          <p className="mt-2 text-sm text-white/80">
-            *Бонусы доступны только для новых пользователей
-          </p>
+        <div className={styles.registration}>
+          <RegistrationForm />
         </div>
       </div>
     </main>

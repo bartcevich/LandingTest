@@ -6,6 +6,10 @@ src/
 │ ├── layout.tsx
 │ ├── page.tsx
 │ └── globals.css
+├── assets/
+│ └── images/
+│ ├── mobile-bg.png
+│ └── background-main.webp
 ├── components/
 │ ├── Header.tsx
 │ ├── Promotion.tsx

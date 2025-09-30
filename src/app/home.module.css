@@ -40,6 +40,13 @@
 }
 
 .content {
+    max-width: 1920px;
+  width: 100%;
   position: relative;
-  z-index: 1;
+  z-index: 5;
+}
+
+.registration{
+    position: absolute;
+  z-index: 10;
 }
