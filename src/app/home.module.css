@@ -9,6 +9,15 @@
   position: relative;
 }
 
+.sidebarImage{
+  position: absolute;
+  width: 104px;
+  height: 150px;
+  top: -13%;
+  right: 0px;
+  max-height: 150px;
+}
+
 .registration{
     position: absolute;
     bottom: 0px;
@@ -30,6 +39,9 @@
   
 }
 @media (min-width: 768px) {
+  .sidebarImage{
+    display: none;
+  }
   .homepage {
     background-position: 10% bottom;
     background-size: cover;
@@ -58,7 +70,7 @@
 }
 
 .content {
-    max-width: 1920px;
+  max-width: 1920px;
   width: 100%;
   min-height: 100vh;
   position: relative;
