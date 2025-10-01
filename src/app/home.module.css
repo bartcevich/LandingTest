@@ -2,67 +2,67 @@
   background-image: url('../assets/images/mobile-bg.png');
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: 10% bottom;
   min-height: 100vh;
   padding: 0;
   margin: 0;
   position: relative;
 }
 
+.registration{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100%;
+    max-width: 768px;
+    min-height: 426px;
+    background-color: rgb(15, 2, 25);
+    display: flex;
+    justify-content: center;
+    z-index: 10;
+    border-radius: 24px 24px 0px 0px;
+  }
 
-
-@media (min-width: 640px) {
+@media (min-width: 550px) {
   .homepage {
     background-position: 50% 40%;
   }
+  
 }
-
 @media (min-width: 768px) {
   .homepage {
     background-position: 10% bottom;
     background-size: cover;
     background-image: url('../assets/images/background-main.webp');
   }
-.content{
-    margin-right: 10%;
+.registration{
+    height: 100%;
+    max-width: 330px;
+    top: 0;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .7);
+    backdrop-filter: blur(6px);
   }
 }
 
-@media (min-width: 1536px) {
-  .homepage {
-    background-position: 50%;
-  }
-  .content{
-    margin: 0;
+@media (min-width: 1250px) {
+  .registration{
+    max-width: 480px;
   }
 }
 
+@media (min-width: 1450px) {
+  .registration{
+    max-width: 580px;
+  }
+}
 
 .content {
     max-width: 1920px;
   width: 100%;
-  min-height: 1080px;
+  min-height: 100vh;
   position: relative;
   z-index: 5;
   display: flex;
   justify-content: center;
-}
-
-.registration{
-    z-index: 10;
-    position: absolute;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    height: 100%;
-    width: 580px;
-    background-color: rgba(0, 0, 0, .7);
-    backdrop-filter: blur(6px);
-}
-
-@media (max-width: 1200px) {
-    .registration {
-        width: 426px;
-    }
 }

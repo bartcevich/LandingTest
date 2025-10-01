@@ -128,7 +128,7 @@ export default function RegistrationForm() {
       dispatch(resetForm());
 
       setTimeout(() => {
-        dispatch(setSuccess(false));
+        dispatch(setSuccess(true));
       }, 3000);
     } catch (err) {
       dispatch(
@@ -201,23 +201,37 @@ export default function RegistrationForm() {
 
           {/* Чекбоксы */}
           <div className={styles.formCheckbox}>
-            <CheckboxItem
-              name="agreement1"
-              label="Мне больше 21 года.<br> Я согласен и принимаю <a href='#'>«Правила приема ставок»</a> и <a href='#'>«Политику конфиденциальности»</a>"
-              checked={formData.agreement1}
-              onChange={(checked) => setValue("agreement1", checked)}
-              isError={!!errors.agreement1}
-              errorMessage={errors.agreement1?.message}
-            />
+            <div className="flex items-center">
+              <CheckboxItem
+                name="agreement1"
+                label=""
+                checked={formData.agreement1}
+                onChange={(checked) => setValue("agreement1", checked)}
+                isError={!!errors.agreement1}
+                errorMessage={errors.agreement1?.message}
+              />
+              <div>
+                <p>Мне больше 21 года.</p>
+                <span>
+                  Я согласен и принимаю <a href="#">«Правила приема ставок»</a>и{" "}
+                  <a href="#">«Политику конфиденциальности»</a>
+                </span>
+              </div>
+            </div>
 
-            <CheckboxItem
-              name="agreement2"
-              label="Я принимаю участие и согласен с <a href='#'>условиями бонуса</a>"
-              checked={formData.agreement2}
-              onChange={(checked) => setValue("agreement2", checked)}
-              isError={!!errors.agreement2}
-              errorMessage={errors.agreement2?.message}
-            />
+            <div className="flex items-center">
+              <CheckboxItem
+                name="agreement2"
+                label=""
+                checked={formData.agreement2}
+                onChange={(checked) => setValue("agreement2", checked)}
+                isError={!!errors.agreement2}
+                errorMessage={errors.agreement2?.message}
+              />
+              <span>
+                Я принимаю участие и согласен с <a href="#">условиями бонуса</a>
+              </span>
+            </div>
           </div>
           {error && (
             <motion.div
@@ -229,16 +243,6 @@ export default function RegistrationForm() {
             </motion.div>
           )}
 
-          {success && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="bg-green-500/20 border border-green-400 text-green-300 px-4 py-3 rounded mt-4"
-            >
-              Регистрация успешно завершена!
-            </motion.div>
-          )}
-
           {/* Кнопка отправки */}
           <div className={styles.formButton}>
             <ButtonSubmit
@@ -247,6 +251,17 @@ export default function RegistrationForm() {
               isLoading={isLoading}
             />
           </div>
+          {success && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              // className="bg-green-500/20 border border-green-400 text-green-300 px-4 py-3 rounded mt-4"
+            >
+              <p className="ml-3 mt-5 text-red-600 text-xs mt-1 flex items-start">
+                Пользователь с таким номером телефона уже существует
+              </p>
+            </motion.div>
+          )}
         </form>
       </div>
     </div>

@@ -5,17 +5,13 @@ import logo from "@/assets/images/logo.svg";
 
 export default function Header() {
   return (
-    <motion.header
+    <motion.div
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="py-[80px]"
+      className="flex items-start justify-center w-[40%] mt-[40px] sm:w-[70%] md:w-[100%]"
     >
-      <Image
-        // className={styles.background_image}
-        src={logo}
-        alt="logo"
-      />
-    </motion.header>
+      <Image src={logo} alt="logo" />
+    </motion.div>
   );
 }

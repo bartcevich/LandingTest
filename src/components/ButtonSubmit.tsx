@@ -1,5 +1,4 @@
 "use client";
-
 import { motion } from "framer-motion";
 
 interface ButtonSubmitProps {
@@ -22,10 +21,10 @@ export default function ButtonSubmit({
       disabled={disabled || isLoading}
       whileHover={{ scale: disabled ? 1 : 1.05 }}
       whileTap={{ scale: disabled ? 1 : 0.95 }}
-      className={`w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 ${
+      className={`w-full bg-gradient-to-r from-[#4DA41E] via-[#5AB828] to-[#4BD700] text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 ${
         disabled
           ? "opacity-50 cursor-not-allowed"
-          : "hover:from-yellow-500 hover:to-orange-600"
+          : "hover:from-[#45a01b] hover:via-[#52a724] hover:to-[#43c500] shadow-lg hover:shadow-xl"
       }`}
     >
       {isLoading ? (
