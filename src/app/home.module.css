@@ -1,5 +1,4 @@
 .homepage {
-  /* background-image: url('@/assets/images/mobile-bg.png'); */
   background-image: url('../assets/images/mobile-bg.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -9,16 +8,7 @@
   position: relative;
 }
 
-.homepage::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 0;
-}
+
 
 @media (min-width: 640px) {
   .homepage {
@@ -32,13 +22,20 @@
     background-size: cover;
     background-image: url('../assets/images/background-main.webp');
   }
+.content{
+    margin-right: 10%;
+  }
 }
 
 @media (min-width: 1536px) {
   .homepage {
-    background-position: center;
+    background-position: 50%;
+  }
+  .content{
+    margin: 0;
   }
 }
+
 
 .content {
     max-width: 1920px;
@@ -55,10 +52,17 @@
     position: absolute;
     right: 0;
     display: flex;
+    justify-content: center;
     align-items: center;
     top: 0;
     height: 100%;
     width: 580px;
     background-color: rgba(0, 0, 0, .7);
     backdrop-filter: blur(6px);
+}
+
+@media (max-width: 1200px) {
+    .registration {
+        width: 426px;
+    }
 }

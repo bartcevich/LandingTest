@@ -23,7 +23,7 @@ export default function Promotion() {
           src={advertisementImage}
           alt="advertisement"
           className="w-full h-auto"
-          // className="w-[500px] h-auto"
+          // className="w-[800px] h-auto"
           priority
         />
       </motion.div>

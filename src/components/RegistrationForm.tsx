@@ -4,22 +4,25 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import {
-  setPhone,
-  setLoading,
-  setError,
-  setSuccess,
-  resetForm,
-} from "@/store/formSlice";
+import { setLoading, setError, setSuccess, resetForm } from "@/store/formSlice";
 import { RootState } from "@/store";
+import Image from "next/image";
+import sidebarImage from "@/assets/images/ic-phone.svg";
+import PasswordInput from "./PasswordInput";
+import CheckboxItem from "./CheckboxItem";
+import ButtonSubmit from "./ButtonSubmit";
+import styles from "./RegistrationForm.module.scss";
 
 interface FormData {
   phone: string;
+  password: string;
+  agreement1: boolean;
+  agreement2: boolean;
 }
 
 export default function RegistrationForm() {
   const dispatch = useAppDispatch();
-  const { phone, isLoading, error, success } = useSelector(
+  const { isLoading, error, success } = useSelector(
     (state: RootState) => state.form
   );
 
@@ -28,8 +31,17 @@ export default function RegistrationForm() {
     handleSubmit,
     formState: { errors },
     setValue,
-    reset,
-  } = useForm<FormData>();
+    watch,
+  } = useForm<FormData>({
+    defaultValues: {
+      phone: "",
+      password: "",
+      agreement1: false,
+      agreement2: false,
+    },
+  });
+
+  const formData = watch();
 
   const formatPhoneNumber = (value: string): string => {
     const numbers = value.replace(/\D/g, "");
@@ -51,15 +63,11 @@ export default function RegistrationForm() {
       value = value.substring(0, 12);
       const formatted = formatPhoneNumber(value);
       setValue("phone", formatted);
-      dispatch(setPhone(formatted));
     } else if (value.startsWith("80")) {
       value = "375" + value.substring(2);
       value = value.substring(0, 12);
       const formatted = formatPhoneNumber(value);
       setValue("phone", formatted);
-      dispatch(setPhone(formatted));
-    } else {
-      dispatch(setPhone(value));
     }
   };
 
@@ -73,9 +81,23 @@ export default function RegistrationForm() {
     }
 
     if (!numbers.startsWith("375") || numbers.length !== 12) {
-      return "Введите корректный номер телефона в формате +375 29 123 45 67";
+      return "Введите корректный номер телефона";
     }
 
+    return true;
+  };
+
+  const validatePassword = (value: string): boolean | string => {
+    if (!value) return "Поле обязательно для заполнения";
+    if (value.length < 6) return "Пароль должен содержать минимум 6 символов";
+    return true;
+  };
+
+  const validateAgreement = (
+    value: boolean,
+    fieldName: string
+  ): boolean | string => {
+    if (!value) return `Необходимо согласие с ${fieldName}`;
     return true;
   };
 
@@ -87,17 +109,24 @@ export default function RegistrationForm() {
       // Имитация API запроса
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Проверка валидности телефона
-      const isValid = validatePhone(data.phone);
-      if (isValid !== true) {
-        throw new Error(isValid as string);
-      }
+      // Валидация
+      const phoneValid = validatePhone(data.phone);
+      const passwordValid = validatePassword(data.password);
+      const agreement1Valid = validateAgreement(data.agreement1, "правилами");
+      const agreement2Valid = validateAgreement(
+        data.agreement2,
+        "условиями бонуса"
+      );
+
+      if (phoneValid !== true) throw new Error(phoneValid as string);
+      if (passwordValid !== true) throw new Error(passwordValid as string);
+      if (agreement1Valid !== true) throw new Error(agreement1Valid as string);
+      if (agreement2Valid !== true) throw new Error(agreement2Valid as string);
 
       dispatch(setSuccess(true));
-      reset();
+      setValue("phone", "");
       dispatch(resetForm());
 
-      // Сброс успеха через 3 секунды
       setTimeout(() => {
         dispatch(setSuccess(false));
       }, 3000);
@@ -111,95 +140,115 @@ export default function RegistrationForm() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.2 }}
-      className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8 mt-8"
-    >
-      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-        Регистрация
-      </h2>
-
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div>
-          <label
-            htmlFor="phone"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Номер телефона
-          </label>
-          <input
-            {...register("phone", {
-              required: "Поле обязательно для заполнения",
-              validate: validatePhone,
-              onChange: handlePhoneChange,
-            })}
-            type="text"
-            id="phone"
-            placeholder="+375 29 123 45 67"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-            disabled={isLoading}
+    <div className={styles.sidebar}>
+      {isLoading && (
+        <div className={styles.sidebarLoader}>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="w-8 h-8 border-2 border-white border-t-transparent rounded-full"
           />
-          {errors.phone && (
-            <motion.p
+        </div>
+      )}
+
+      <div className={styles.form}>
+        <h2 className={styles.formTitle}>Регистрация</h2>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Поле телефона */}
+          <div className={styles.formItem}>
+            <label htmlFor="phoneInput" className="text-white mb-2 text-[13px]">
+              Номер телефона
+            </label>
+            <div className="relative">
+              <div className={styles.formImage}>
+                <Image src={sidebarImage} alt="Phone icon" />
+              </div>
+              <input
+                id="phoneInput"
+                {...register("phone", {
+                  required: "Поле обязательно для заполнения",
+                  validate: validatePhone,
+                  onChange: handlePhoneChange,
+                })}
+                type="text"
+                placeholder="+375 29 123 45 67"
+                className={styles.formPhone}
+                disabled={isLoading}
+              />
+              {errors.phone && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={styles.errorText}
+                >
+                  {errors.phone.message}
+                </motion.p>
+              )}
+            </div>
+          </div>
+
+          {/* Поле пароля */}
+          <PasswordInput
+            value={formData.password}
+            onChange={(value) => setValue("password", value)}
+            isError={!!errors.password}
+            errorMessage={error || undefined}
+            placeholder="Пароль"
+            label="Пароль"
+            id="passwordInput"
+          />
+
+          {/* Чекбоксы */}
+          <div className={styles.formCheckbox}>
+            <CheckboxItem
+              name="agreement1"
+              label="Мне больше 21 года.<br> Я согласен и принимаю <a href='#'>«Правила приема ставок»</a> и <a href='#'>«Политику конфиденциальности»</a>"
+              checked={formData.agreement1}
+              onChange={(checked) => setValue("agreement1", checked)}
+              isError={!!errors.agreement1}
+              errorMessage={errors.agreement1?.message}
+            />
+
+            <CheckboxItem
+              name="agreement2"
+              label="Я принимаю участие и согласен с <a href='#'>условиями бонуса</a>"
+              checked={formData.agreement2}
+              onChange={(checked) => setValue("agreement2", checked)}
+              isError={!!errors.agreement2}
+              errorMessage={errors.agreement2?.message}
+            />
+          </div>
+          {error && (
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-red-500 text-sm mt-2"
+              className="bg-red-500/20 border border-red-400 text-red-300 px-4 py-3 rounded mt-4"
             >
-              {errors.phone.message}
-            </motion.p>
+              <span>{error}</span>
+            </motion.div>
           )}
-        </div>
 
-        <div className="text-sm text-gray-600 space-y-2">
-          <p className="font-semibold">Перед регистрацией:</p>
-          <ul className="list-disc list-inside space-y-1">
-            <li>Подтвердите, что вам исполнилось 18 лет</li>
-            <li>Ознакомьтесь с правилами и условиями</li>
-            <li>Играйте ответственно</li>
-          </ul>
-        </div>
-
-        {error && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"
-          >
-            {error}
-          </motion.div>
-        )}
-
-        {success && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"
-          >
-            Регистрация успешно завершена! На ваш телефон отправлено SMS с
-            подтверждением.
-          </motion.div>
-        )}
-
-        <motion.button
-          type="submit"
-          disabled={isLoading}
-          whileHover={{ scale: isLoading ? 1 : 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 px-4 rounded-lg hover:from-yellow-500 hover:to-orange-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? (
+          {success && (
             <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              className="w-6 h-6 border-2 border-white border-t-transparent rounded-full mx-auto"
-            />
-          ) : (
-            "Зарегистрироваться"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-green-500/20 border border-green-400 text-green-300 px-4 py-3 rounded mt-4"
+            >
+              Регистрация успешно завершена!
+            </motion.div>
           )}
-        </motion.button>
-      </form>
-    </motion.div>
+
+          {/* Кнопка отправки */}
+          <div className={styles.formButton}>
+            <ButtonSubmit
+              onClick={handleSubmit(onSubmit)}
+              disabled={isLoading}
+              isLoading={isLoading}
+            />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

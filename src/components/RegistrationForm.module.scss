@@ -5,17 +5,9 @@
   right: 0;
   height: 426px;
   width: 100%;
-  background-color: #1a1a1a; /* Замените $color-dark на актуальный цвет */
   display: flex;
   align-items: center;
   z-index: 200;
-}
-
-.sidebarImage {
-  position: absolute;
-  top: -16%;
-  right: 0;
-  max-height: 150px;
 }
 
 .sidebarLoader {
@@ -27,7 +19,6 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .form {
@@ -50,12 +41,70 @@
   margin-bottom: 8px;
 }
 
+.formImage {
+  position: absolute;
+  left: 1px;
+    border-radius: 6px;
+    top: 1px;
+    height: 36px;
+    width: 44px;
+}
+
+.formPhone{
+    height: 38px;
+    width: 100%;
+    background-color: #f1f3f6;
+    border: 1px solid #e8eaf0;
+    border-radius: 6px;
+    padding: 0 14px 0 58px;
+    color: black;
+}
+
+.formPhone:focus {
+    border-color: #5ab828;
+}
+
 .formCheckbox {
   margin-top: 22px;
 }
 
 .formButton {
   margin-top: 22px;
+}
+
+/* Стили для чекбоксов */
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  color: white;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkboxInput {
+  margin-right: 8px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.checkboxText, .formCheckbox {
+  color: white;
+}
+
+.checkboxLink {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.checkboxLink:hover {
+  color: #93c5fd;
+}
+
+.errorText {
+  color: #f91717;
+  font-size: 12px;
+  margin-top: 4px;
 }
 
 /* Медиа-запросы */
@@ -65,13 +114,11 @@
     width: 40%;
     height: 100%;
     border-radius: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(6px);
   }
   
-  .sidebarImage {
+  /* .sidebarImage {
     display: none;
-  }
+  } */
   
   .sidebarLoader {
     align-items: center;
